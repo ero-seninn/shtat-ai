@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЛК администратора — ШТАТ.АИ</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #f7f8fa;
+    color: #1a1a1a;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
+  .layout { display: flex; min-height: 100vh; }
+  .sidebar {
+    width: 240px;
+    background: #fff;
+    border-right: 1px solid #e5e7eb;
+    padding: 24px 16px;
+    flex-shrink: 0;
+  }
+  .logo {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    padding: 0 8px;
+  }
+  .nav-item {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #444;
+    cursor: pointer;
+    margin-bottom: 2px;
+    transition: background 0.15s;
+  }
+  .nav-item:hover { background: #f3f4f6; }
+  .nav-item.active {
+    background: #eef2ff;
+    color: #2563eb;
+    font-weight: 500;
+  }
+  .main {
+    flex: 1;
+    padding: 40px;
+    max-width: calc(100vw - 240px);
+  }
+  .screen { display: none; }
+  .screen.active { display: block; }
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    color: #666;
+    font-size: 15px;
+    margin-bottom: 28px;
+  }
+  h2 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    margin-top: 28px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .card-label {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  .card-value {
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .card-hint {
+    font-size: 12px;
+    color: #999;
+    margin-top: 6px;
+  }
+  .banner {
+    padding: 14px 18px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .banner-warning {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #92400e;
+  }
+  .banner-danger {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+  }
+  .banner-info {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    color: #1e40af;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+  }
+  th {
+    text-align: left;
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
+    padding: 12px 16px;
+    background: #fafafa;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  td {
+    padding: 14px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid #f3f4f6;
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #fafafa; }
+  .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+    text-decoration: none;
+  }
+  .btn-primary { background: #2563eb; color: #fff; }
+  .btn-primary:hover { background: #1d4ed8; }
+  .btn-secondary { background: #f3f4f6; color: #1a1a1a; border: 1px solid #d1d5db; }
+  .btn-secondary:hover { background: #e5e7eb; }
+  .btn-small {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  .btn-link {
+    background: none;
+    border: none;
+    color: #2563eb;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  .btn-link:hover { background: #eff6ff; }
+  .actions-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 16px;
+  }
+  .filters {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .filters select, .filters input {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+  }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .badge-success { background: #ecfdf5; color: #065f46; }
+  .badge-warning { background: #fffbeb; color: #92400e; }
+  .badge-danger { background: #fef2f2; color: #991b1b; }
+  .badge-neutral { background: #f3f4f6; color: #444; }
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  .modal.visible { display: flex; }
+  .modal-content {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-content h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .form-field {
+    margin-bottom: 16px;
+  }
+  .form-field label {
+    display: block;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  .form-field input, .form-field select, .form-field textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+  .preset-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 12px;
+  }
+  .preset-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+  }
+  .preset-name {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .preset-meta {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+  }
+  .preset-models {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+  .model-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #f3f4f6;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #444;
+  }
+  .limit-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 16px;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f3f4f6;
+    align-items: center;
+  }
+  .limit-row:last-child { border-bottom: none; }
+  .limit-row input {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 100%;
+  }
+  .limit-row input::placeholder {
+    color: #9ca3af;
+    font-style: italic;
+  }
+  .packages {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .package {
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .package:hover { border-color: #93c5fd; }
+  .package.selected { border-color: #2563eb; background: #f8faff; }
+  .package-credits {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .package-price {
+    font-size: 15px;
+    color: #666;
+  }
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .tab {
+    padding: 10px 16px;
+    font-size: 14px;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+  }
+  .tab.active {
+    color: #2563eb;
+    border-bottom-color: #2563eb;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="logo">ШТАТ.АИ</div>
+    <div class="nav-item active" data-screen="dashboard">Дашборд</div>
+    <div class="nav-item" data-screen="employees">Сотрудники</div>
+    <div class="nav-item" data-screen="presets">Пресеты</div>
+    <div class="nav-item" data-screen="limits">Лимиты</div>
+    <div class="nav-item" data-screen="tariff">Тариф</div>
+    <div class="nav-item" data-screen="balance">Баланс</div>
+    <div class="nav-item" data-screen="details">Детализация</div>
+  </aside>
+
+  <main class="main">
+    <!-- ЭКРАН 1. ДАШБОРД -->
+    <section class="screen active" id="screen-dashboard">
+      <h1>Дашборд</h1>
+      <p class="subtitle">ООО «Ромашка» · тариф Бизнес · 18 активных сотрудников</p>
+
+      <div class="banner banner-warning">
+        <div>⚠️ Баланс компании составляет менее 20%. Остаток: 95 у.е.</div>
+        <button class="btn btn-primary btn-small" onclick="showScreen('balance')">Пополнить</button>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-label">Основной баланс</div>
+          <div class="card-value">95 у.е.</div>
+          <div class="card-hint">купленные</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Бонусный баланс</div>
+          <div class="card-value">60 у.е.</div>
+          <div class="card-hint">перенесено с августа</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Авансовый остаток</div>
+          <div class="card-value">150 000 ₽</div>
+          <div class="card-hint">хватит на 2 месяца</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Тариф</div>
+          <div class="card-value">Бизнес</div>
+          <div class="card-hint">до 15 ноября 2026</div>
+        </div>
+      </div>
+
+      <h2>Расход за текущий период</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Пресет</th>
+            <th>Кредитов</th>
+            <th>% от общего</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Разработчик</td>
+            <td>180 у.е.</td>
+            <td>56%</td>
+          </tr>
+          <tr>
+            <td>Аналитик</td>
+            <td>100 у.е.</td>
+            <td>31%</td>
+          </tr>
+          <tr>
+            <td>Маркетолог</td>
+            <td>40 у.е.</td>
+            <td>13%</td>
+          </tr>
+          <tr style="font-weight: 600;">
+            <td>Итого</td>
+            <td>320 у.е.</td>
+            <td>100%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Активность</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="card-label">Активных сотрудников</div>
+          <div class="card-value">18 / 25</div>
+          <div class="card-hint">72% вовлечённость</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Запросов за период</div>
+          <div class="card-value">1 600</div>
+          <div class="card-hint">из 2 500 лимита</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 2. СОТРУДНИКИ -->
+    <section class="screen" id="screen-employees">
+      <h1>Сотрудники</h1>
+      <p class="subtitle">Управление доступами, пресетами и лимитами сотрудников</p>
+
+      <div class="actions-bar">
+        <div></div>
+        <button class="btn btn-primary" onclick="openModal('inviteModal')">+ Пригласить сотрудника</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Имя</th>
+            <th>E-mail</th>
+            <th>Пресет</th>
+            <th>Личный лимит</th>
+            <th>Остаток</th>
+            <th>Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Иван Петров</td>
+            <td>ivan@romashka.ru</td>
+            <td>Разработчик</td>
+            <td>200 у.е.</td>
+            <td><span class="badge badge-success">120 у.е.</span></td>
+            <td>
+              <button class="btn-link" onclick="openModal('editUserModal')">Изменить</button>
+              <button class="btn-link" onclick="openModal('topUpUserModal')">Пополнить</button>
+              <button class="btn-link" style="color:#dc2626;">Удалить</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Мария Смирнова</td>
+            <td>maria@romashka.ru</td>
+            <td>Аналитик</td>
+            <td>200 у.е.</td>
+            <td><span class="badge badge-warning">15 у.е.</span></td>
+            <td>
+              <button class="btn-link" onclick="openModal('editUserModal')">Изменить</button>
+              <button class="btn-link" onclick="openModal('topUpUserModal')">Пополнить</button>
+              <button class="btn-link" style="color:#dc2626;">Удалить</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Анна Козлова</td>
+            <td>anna@romashka.ru</td>
+            <td>Маркетолог</td>
+            <td>150 у.е.</td>
+            <td><span class="badge badge-danger">0 у.е.</span></td>
+            <td>
+              <button class="btn-link" onclick="openModal('editUserModal')">Изменить</button>
+              <button class="btn-link" onclick="openModal('topUpUserModal')">Пополнить</button>
+              <button class="btn-link" style="color:#dc2626;">Удалить</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Олег Морозов</td>
+            <td>oleg@romashka.ru</td>
+            <td>Поддержка</td>
+            <td>100 у.е.</td>
+            <td><span class="badge badge-success">80 у.е.</span></td>
+            <td>
+              <button class="btn-link" onclick="openModal('editUserModal')">Изменить</button>
+              <button class="btn-link" onclick="openModal('topUpUserModal')">Пополнить</button>
+              <button class="btn-link" style="color:#dc2626;">Удалить</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ЭКРАН 3. ПРЕСЕТЫ -->
+    <section class="screen" id="screen-presets">
+      <h1>Пресеты</h1>
+      <p class="subtitle">Наборы моделей и лимиты кредитов для разных ролей</p>
+
+      <div class="actions-bar">
+        <div></div>
+        <button class="btn btn-primary" onclick="openModal('createPresetModal')">+ Создать пресет</button>
+      </div>
+
+      <div class="preset-card">
+        <div class="preset-header">
+          <div>
+            <div class="preset-name">Разработчик</div>
+            <div class="preset-meta">10 сотрудников · лимит 400 у.е.</div>
+          </div>
+          <div>
+            <button class="btn-link">Редактировать</button>
+            <button class="btn-link" style="color:#dc2626;">Удалить</button>
+          </div>
+        </div>
+        <div class="preset-models">
+          <span class="model-tag">Sonnet 5</span>
+          <span class="model-tag">Opus 5</span>
+          <span class="model-tag">Haiku 4.5</span>
+          <span class="model-tag">DeepSeek V3</span>
+          <span class="model-tag">DeepSeek V4</span>
+        </div>
+      </div>
+
+      <div class="preset-card">
+        <div class="preset-header">
+          <div>
+            <div class="preset-name">Аналитик</div>
+            <div class="preset-meta">5 сотрудников · лимит 200 у.е.</div>
+          </div>
+          <div>
+            <button class="btn-link">Редактировать</button>
+            <button class="btn-link" style="color:#dc2626;">Удалить</button>
+          </div>
+        </div>
+        <div class="preset-models">
+          <span class="model-tag">Haiku 4.5</span>
+          <span class="model-tag">Sonnet 5</span>
+          <span class="model-tag">DeepSeek V3</span>
+          <span class="model-tag">DeepSeek V4</span>
+          <span class="model-tag">YandexGPT 5</span>
+        </div>
+      </div>
+
+      <div class="preset-card">
+        <div class="preset-header">
+          <div>
+            <div class="preset-name">Маркетолог / контент</div>
+            <div class="preset-meta">5 сотрудников · лимит 150 у.е.</div>
+          </div>
+          <div>
+            <button class="btn-link">Редактировать</button>
+            <button class="btn-link" style="color:#dc2626;">Удалить</button>
+          </div>
+        </div>
+        <div class="preset-models">
+          <span class="model-tag">Sonnet 5</span>
+          <span class="model-tag">Haiku 4.5</span>
+          <span class="model-tag">DeepSeek V3</span>
+          <span class="model-tag">Nano Banana Pro</span>
+          <span class="model-tag">Kling 2.1</span>
+          <span class="model-tag">WAN 2.1</span>
+          <span class="model-tag">WAN 2.2</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 4. ЛИМИТЫ -->
+    <section class="screen" id="screen-limits">
+      <h1>Настройки лимитов на следующий период</h1>
+      <p class="subtitle">Период: ноябрь 2026 · тариф Бизнес · 1 500 кредитов</p>
+
+      <div class="banner banner-info">
+        ℹ️ Система предзаполнила значения на основе предыдущего периода. Вы можете отредактировать их вручную.
+      </div>
+
+      <h2>Распределение по пресетам</h2>
+      <div style="background:#fff; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden;">
+        <div class="limit-row" style="background:#fafafa; font-size:13px; color:#666; font-weight:500;">
+          <div>Пресет</div>
+          <div>Прошлый лимит</div>
+          <div>Предзаполнено</div>
+          <div>Ваш лимит</div>
+        </div>
+        <div class="limit-row">
+          <div>Разработчик</div>
+          <div>400 у.е.</div>
+          <div>600 у.е.</div>
+          <div><input type="number" placeholder="600" value="600"></div>
+        </div>
+        <div class="limit-row">
+          <div>Аналитик</div>
+          <div>200 у.е.</div>
+          <div>300 у.е.</div>
+          <div><input type="number" placeholder="300" value="300"></div>
+        </div>
+        <div class="limit-row">
+          <div>Маркетолог / контент</div>
+          <div>150 у.е.</div>
+          <div>225 у.е.</div>
+          <div><input type="number" placeholder="225" value="225"></div>
+        </div>
+        <div class="limit-row">
+          <div>Поддержка / массовые операции</div>
+          <div>100 у.е.</div>
+          <div>150 у.е.</div>
+          <div><input type="number" placeholder="150" value="150"></div>
+        </div>
+        <div class="limit-row">
+          <div>Юрист / комплаенс</div>
+          <div>150 у.е.</div>
+          <div>225 у.е.</div>
+          <div><input type="number" placeholder="225" value="225"></div>
+        </div>
+      </div>
+
+      <h2>Индивидуальные лимиты сотрудников</h2>
+      <p class="subtitle" style="font-size:13px;">Если задан индивидуальный лимит, он имеет приоритет над лимитом пресета.</p>
+
+      <div style="background:#fff; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden;">
+        <div class="limit-row" style="background:#fafafa; font-size:13px; color:#666; font-weight:500;">
+          <div>Сотрудник</div>
+          <div>Пресет</div>
+          <div>Лимит пресета</div>
+          <div>Индивидуальный лимит</div>
+        </div>
+        <div class="limit-row">
+          <div>Иван Петров</div>
+          <div>Разработчик</div>
+          <div>600 у.е.</div>
+          <div><input type="number" placeholder="не задан"></div>
+        </div>
+        <div class="limit-row">
+          <div>Мария Смирнова</div>
+          <div>Аналитик</div>
+          <div>300 у.е.</div>
+          <div><input type="number" placeholder="не задан" value="350"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:24px; text-align:right;">
+        <button class="btn btn-secondary" style="margin-right:12px;">Отменить</button>
+        <button class="btn btn-primary">Применить</button>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 5. ТАРИФ -->
+    <section class="screen" id="screen-tariff">
+      <h1>Управление тарифом</h1>
+      <p class="subtitle">Текущий тариф и смена на следующий период</p>
+
+      <h2>Текущий тариф</h2>
+      <div class="card" style="max-width:500px;">
+        <div class="card-label">Тариф</div>
+        <div class="card-value">Бизнес</div>
+        <div style="margin-top:12px; font-size:14px; color:#444;">
+          <div>Стоимость: 70 000 ₽ / мес</div>
+          <div>Кредитов: 1 500 у.е.</div>
+          <div>До 50 сотрудников</div>
+          <div style="margin-top:8px; color:#666;">Период: до 15 ноября 2026</div>
+        </div>
+      </div>
+
+      <h2>Авансовый остаток</h2>
+      <div class="card" style="max-width:500px;">
+        <div class="card-label">Доступно</div>
+        <div class="card-value">150 000 ₽</div>
+        <div class="card-hint">хватит на 2 месяца</div>
+      </div>
+
+      <h2>Смена тарифа со следующего месяца</h2>
+      <div style="background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:20px; max-width:500px;">
+        <div class="form-field">
+          <label>Выберите новый тариф</label>
+          <select>
+            <option>Базовый — 25 000 ₽ / 500 у.е.</option>
+            <option selected>Бизнес — 70 000 ₽ / 1 500 у.е.</option>
+            <option>Про — 220 000 ₽ / 5 000 у.е.</option>
+            <option>Цена по запросу</option>
+          </select>
+        </div>
+        <button class="btn btn-primary">Сменить тариф</button>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 6. БАЛАНС -->
+    <section class="screen" id="screen-balance">
+      <h1>Баланс и пополнение</h1>
+      <p class="subtitle">Текущий баланс компании и история операций</p>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-label">Основной баланс</div>
+          <div class="card-value">95 у.е.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Бонусный баланс</div>
+          <div class="card-value">60 у.е.</div>
+        </div>
+        <div class="card">
+          <div class="card-label">Авансовый остаток</div>
+          <div class="card-value">150 000 ₽</div>
+        </div>
+      </div>
+
+      <h2>Пополнить баланс</h2>
+      <div class="packages">
+        <div class="package">
+          <div class="package-credits">500 у.е.</div>
+          <div class="package-price">25 000 ₽</div>
+        </div>
+        <div class="package selected">
+          <div class="package-credits">1 500 у.е.</div>
+          <div class="package-price">70 000 ₽</div>
+        </div>
+        <div class="package">
+          <div class="package-credits">5 000 у.е.</div>
+          <div class="package-price">220 000 ₽</div>
+        </div>
+        <div class="package">
+          <div class="package-credits">15 000 у.е.</div>
+          <div class="package-price">600 000 ₽</div>
+        </div>
+      </div>
+      <div style="margin-top:16px;">
+        <button class="btn btn-primary">Купить выбранный пакет</button>
+        <span style="margin-left:12px; font-size:13px; color:#666;">Менеджер свяжется с вами для оплаты</span>
+      </div>
+
+      <h2>История операций</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Дата</th>
+            <th>Тип</th>
+            <th>Сумма</th>
+            <th>Инициатор</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>01.11.2026</td>
+            <td><span class="badge badge-neutral">Списание</span></td>
+            <td>− 12 у.е.</td>
+            <td>Иван Петров</td>
+          </tr>
+          <tr>
+            <td>31.10.2026</td>
+            <td><span class="badge badge-success">Пополнение</span></td>
+            <td>+ 60 у.е.</td>
+            <td>Перенос с октября</td>
+          </tr>
+          <tr>
+            <td>15.10.2026</td>
+            <td><span class="badge badge-success">Пополнение</span></td>
+            <td>+ 500 у.е.</td>
+            <td>Личный менеджер</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ЭКРАН 7. ДЕТАЛИЗАЦИЯ -->
+    <section class="screen" id="screen-details">
+      <h1>Детализация расхода</h1>
+      <p class="subtitle">Расход кредитов по сотрудникам за период</p>
+
+      <div class="filters">
+        <select>
+          <option>Ноябрь 2026</option>
+          <option>Октябрь 2026</option>
+          <option>Сентябрь 2026</option>
+        </select>
+        <select>
+          <option>Все пресеты</option>
+          <option>Разработчик</option>
+          <option>Аналитик</option>
+          <option>Маркетолог</option>
+        </select>
+        <select>
+          <option>Все сотрудники</option>
+          <option>Иван Петров</option>
+          <option>Мария Смирнова</option>
+        </select>
+        <button class="btn btn-secondary">Выгрузить CSV</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Сотрудник</th>
+            <th>Пресет</th>
+            <th>Запросов</th>
+            <th>Токенов</th>
+            <th>Потрачено</th>
+            <th>Модели</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Иван Петров</td>
+            <td>Разработчик</td>
+            <td>240</td>
+            <td>720 000</td>
+            <td>80 у.е.</td>
+            <td>Sonnet 5, Opus 5</td>
+          </tr>
+          <tr>
+            <td>Мария Смирнова</td>
+            <td>Аналитик</td>
+            <td>180</td>
+            <td>540 000</td>
+            <td>45 у.е.</td>
+            <td>Haiku 4.5, DeepSeek V3</td>
+          </tr>
+          <tr>
+            <td>Анна Козлова</td>
+            <td>Маркетолог</td>
+            <td>95</td>
+            <td>285 000</td>
+            <td>40 у.е.</td>
+            <td>Sonnet 5, Nano Banana Pro</td>
+          </tr>
+          <tr>
+            <td>Олег Морозов</td>
+            <td>Поддержка</td>
+            <td>320</td>
+            <td>160 000</td>
+            <td>20 у.е.</td>
+            <td>Haiku 4.5, DeepSeek V3</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</div>
+
+<!-- МОДАЛЬНЫЕ ОКНА -->
+<div class="modal" id="inviteModal">
+  <div class="modal-content">
+    <h3>Пригласить сотрудника</h3>
+    <div class="form-field">
+      <label>E-mail</label>
+      <input type="email" placeholder="name@company.ru">
+    </div>
+    <div class="form-field">
+      <label>Пресет</label>
+      <select>
+        <option>Разработчик</option>
+        <option>Аналитик</option>
+        <option>Маркетолог / контент</option>
+        <option>Поддержка / массовые операции</option>
+        <option>Юрист / комплаенс</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label>Личный лимит (опционально)</label>
+      <input type="number" placeholder="Не задан">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('inviteModal')">Отмена</button>
+      <button class="btn btn-primary" onclick="closeModal('inviteModal')">Отправить приглашение</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="editUserModal">
+  <div class="modal-content">
+    <h3>Изменить сотрудника</h3>
+    <div class="form-field">
+      <label>Имя</label>
+      <input type="text" value="Иван Петров">
+    </div>
+    <div class="form-field">
+      <label>E-mail</label>
+      <input type="email" value="ivan@romashka.ru">
+    </div>
+    <div class="form-field">
+      <label>Пресет</label>
+      <select>
+        <option selected>Разработчик</option>
+        <option>Аналитик</option>
+        <option>Маркетолог / контент</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label>Личный лимит</label>
+      <input type="number" value="200">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('editUserModal')">Отмена</button>
+      <button class="btn btn-primary" onclick="closeModal('editUserModal')">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="topUpUserModal">
+  <div class="modal-content">
+    <h3>Пополнить баланс сотрудника</h3>
+    <div class="form-field">
+      <label>Сотрудник</label>
+      <input type="text" value="Иван Петров" disabled style="background:#f3f4f6;">
+    </div>
+    <div class="form-field">
+      <label>Сумма (у.е.)</label>
+      <input type="number" placeholder="50">
+    </div>
+    <div class="form-field">
+      <label>Источник</label>
+      <select>
+        <option>Баланс компании</option>
+        <option>Другой сотрудник</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('topUpUserModal')">Отмена</button>
+      <button class="btn btn-primary" onclick="closeModal('topUpUserModal')">Пополнить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="createPresetModal">
+  <div class="modal-content">
+    <h3>Создать пресет</h3>
+    <div class="form-field">
+      <label>Название</label>
+      <input type="text" placeholder="Например, Тестировщик">
+    </div>
+    <div class="form-field">
+      <label>Лимит кредитов</label>
+      <input type="number" placeholder="200">
+    </div>
+    <div class="form-field">
+      <label>Доступные модели</label>
+      <select multiple style="height:120px;">
+        <option>Sonnet 5</option>
+        <option>Opus 5</option>
+        <option>Haiku 4.5</option>
+        <option>DeepSeek V3</option>
+        <option>DeepSeek V4</option>
+        <option>YandexGPT 5</option>
+        <option>Nano Banana Pro</option>
+        <option>Kling 2.1</option>
+        <option>WAN 2.1</option>
+        <option>WAN 2.2</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('createPresetModal')">Отмена</button>
+      <button class="btn btn-primary" onclick="closeModal('createPresetModal')">Создать</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Навигация
+  document.querySelectorAll(".nav-item").forEach(item => {
+    item.addEventListener("click", () => {
+      const screenId = item.dataset.screen;
+      showScreen(screenId);
+    });
+  });
+
+  function showScreen(screenId) {
+    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+    document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+    document.getElementById("screen-" + screenId).classList.add("active");
+    document.querySelector(`.nav-item[data-screen="${screenId}"]`).classList.add("active");
+  }
+
+  // Модальные окна
+  function openModal(id) {
+    document.getElementById(id).classList.add("visible");
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.remove("visible");
+  }
+
+  // Закрытие по клику вне модального окна
+  document.querySelectorAll(".modal").forEach(modal => {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) modal.classList.remove("visible");
+    });
+  });
+
+  // Выбор пакета кредитов
+  document.querySelectorAll(".package").forEach(pkg => {
+    pkg.addEventListener("click", () => {
+      document.querySelectorAll(".package").forEach(p => p.classList.remove("selected"));
+      pkg.classList.add("selected");
+    });
+  });
+</script>
+</body>
+</html>
