@@ -15,7 +15,7 @@
   }
   .layout { display: flex; min-height: 100vh; }
   .sidebar {
-    width: 240px;
+    width: 260px;
     background: #fff;
     border-right: 1px solid #e5e7eb;
     padding: 24px 16px;
@@ -46,26 +46,13 @@
   .main {
     flex: 1;
     padding: 40px;
-    max-width: calc(100vw - 240px);
+    max-width: calc(100vw - 260px);
   }
   .screen { display: none; }
   .screen.active { display: block; }
-  h1 {
-    font-size: 26px;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-  .subtitle {
-    color: #666;
-    font-size: 15px;
-    margin-bottom: 28px;
-  }
-  h2 {
-    font-size: 17px;
-    font-weight: 600;
-    margin-bottom: 14px;
-    margin-top: 28px;
-  }
+  h1 { font-size: 26px; font-weight: 600; margin-bottom: 8px; }
+  .subtitle { color: #666; font-size: 15px; margin-bottom: 28px; }
+  h2 { font-size: 17px; font-weight: 600; margin-bottom: 14px; margin-top: 28px; }
   .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -78,20 +65,9 @@
     border-radius: 12px;
     padding: 20px;
   }
-  .card-label {
-    font-size: 13px;
-    color: #666;
-    margin-bottom: 8px;
-  }
-  .card-value {
-    font-size: 24px;
-    font-weight: 700;
-  }
-  .card-hint {
-    font-size: 12px;
-    color: #999;
-    margin-top: 6px;
-  }
+  .card-label { font-size: 13px; color: #666; margin-bottom: 8px; }
+  .card-value { font-size: 24px; font-weight: 700; }
+  .card-hint { font-size: 12px; color: #999; margin-top: 6px; }
   .banner {
     padding: 14px 18px;
     border-radius: 10px;
@@ -102,21 +78,9 @@
     justify-content: space-between;
     gap: 16px;
   }
-  .banner-warning {
-    background: #fffbeb;
-    border: 1px solid #fde68a;
-    color: #92400e;
-  }
-  .banner-danger {
-    background: #fef2f2;
-    border: 1px solid #fecaca;
-    color: #991b1b;
-  }
-  .banner-info {
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    color: #1e40af;
-  }
+  .banner-warning { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+  .banner-danger { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+  .banner-info { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
   table {
     width: 100%;
     border-collapse: collapse;
@@ -157,10 +121,7 @@
   .btn-primary:hover { background: #1d4ed8; }
   .btn-secondary { background: #f3f4f6; color: #1a1a1a; border: 1px solid #d1d5db; }
   .btn-secondary:hover { background: #e5e7eb; }
-  .btn-small {
-    padding: 6px 12px;
-    font-size: 13px;
-  }
+  .btn-small { padding: 6px 12px; font-size: 13px; }
   .btn-link {
     background: none;
     border: none;
@@ -178,11 +139,7 @@
     margin-bottom: 16px;
     gap: 16px;
   }
-  .filters {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
+  .filters { display: flex; gap: 12px; margin-bottom: 16px; }
   .filters select, .filters input {
     padding: 8px 12px;
     border: 1px solid #d1d5db;
@@ -220,13 +177,8 @@
     max-height: 90vh;
     overflow-y: auto;
   }
-  .modal-content h3 {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-  .form-field {
-    margin-bottom: 16px;
-  }
+  .modal-content h3 { font-size: 20px; margin-bottom: 20px; }
+  .form-field { margin-bottom: 16px; }
   .form-field label {
     display: block;
     font-size: 13px;
@@ -264,21 +216,9 @@
     align-items: flex-start;
     margin-bottom: 12px;
   }
-  .preset-name {
-    font-size: 16px;
-    font-weight: 600;
-  }
-  .preset-meta {
-    font-size: 13px;
-    color: #666;
-    margin-top: 4px;
-  }
-  .preset-models {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 10px;
-  }
+  .preset-name { font-size: 16px; font-weight: 600; }
+  .preset-meta { font-size: 13px; color: #666; margin-top: 4px; }
+  .preset-models { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
   .model-tag {
     display: inline-block;
     padding: 4px 10px;
@@ -303,10 +243,7 @@
     font-size: 14px;
     width: 100%;
   }
-  .limit-row input::placeholder {
-    color: #9ca3af;
-    font-style: italic;
-  }
+  .limit-row input::placeholder { color: #9ca3af; font-style: italic; }
   .packages {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -323,34 +260,8 @@
   }
   .package:hover { border-color: #93c5fd; }
   .package.selected { border-color: #2563eb; background: #f8faff; }
-  .package-credits {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-  .package-price {
-    font-size: 15px;
-    color: #666;
-  }
-  .tabs {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  .tab {
-    padding: 10px 16px;
-    font-size: 14px;
-    color: #666;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
-  }
-  .tab.active {
-    color: #2563eb;
-    border-bottom-color: #2563eb;
-    font-weight: 500;
-  }
+  .package-credits { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .package-price { font-size: 15px; color: #666; }
 </style>
 </head>
 <body>
@@ -359,7 +270,7 @@
     <div class="logo">ШТАТ.АИ</div>
     <div class="nav-item active" data-screen="dashboard">Дашборд</div>
     <div class="nav-item" data-screen="employees">Сотрудники</div>
-    <div class="nav-item" data-screen="presets">Пресеты</div>
+    <div class="nav-item" data-screen="presets">Ролевые шаблоны</div>
     <div class="nav-item" data-screen="limits">Лимиты</div>
     <div class="nav-item" data-screen="tariff">Тариф</div>
     <div class="nav-item" data-screen="balance">Баланс</div>
@@ -367,7 +278,7 @@
   </aside>
 
   <main class="main">
-    <!-- ЭКРАН 1. ДАШБОРД -->
+    <!-- ДАШБОРД -->
     <section class="screen active" id="screen-dashboard">
       <h1>Дашборд</h1>
       <p class="subtitle">ООО «Ромашка» · тариф Бизнес · 18 активных сотрудников</p>
@@ -404,32 +315,16 @@
       <table>
         <thead>
           <tr>
-            <th>Пресет</th>
+            <th>Ролевой шаблон</th>
             <th>Кредитов</th>
             <th>% от общего</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Разработчик</td>
-            <td>180 у.е.</td>
-            <td>56%</td>
-          </tr>
-          <tr>
-            <td>Аналитик</td>
-            <td>100 у.е.</td>
-            <td>31%</td>
-          </tr>
-          <tr>
-            <td>Маркетолог</td>
-            <td>40 у.е.</td>
-            <td>13%</td>
-          </tr>
-          <tr style="font-weight: 600;">
-            <td>Итого</td>
-            <td>320 у.е.</td>
-            <td>100%</td>
-          </tr>
+          <tr><td>Разработчик</td><td>180 у.е.</td><td>56%</td></tr>
+          <tr><td>Аналитик</td><td>100 у.е.</td><td>31%</td></tr>
+          <tr><td>Маркетолог</td><td>40 у.е.</td><td>13%</td></tr>
+          <tr style="font-weight: 600;"><td>Итого</td><td>320 у.е.</td><td>100%</td></tr>
         </tbody>
       </table>
 
@@ -448,10 +343,10 @@
       </div>
     </section>
 
-    <!-- ЭКРАН 2. СОТРУДНИКИ -->
+    <!-- СОТРУДНИКИ -->
     <section class="screen" id="screen-employees">
       <h1>Сотрудники</h1>
-      <p class="subtitle">Управление доступами, пресетами и лимитами сотрудников</p>
+      <p class="subtitle">Управление доступами, ролевыми шаблонами и лимитами сотрудников</p>
 
       <div class="actions-bar">
         <div></div>
@@ -463,7 +358,7 @@
           <tr>
             <th>Имя</th>
             <th>E-mail</th>
-            <th>Пресет</th>
+            <th>Ролевой шаблон</th>
             <th>Личный лимит</th>
             <th>Остаток</th>
             <th>Действия</th>
@@ -522,14 +417,14 @@
       </table>
     </section>
 
-    <!-- ЭКРАН 3. ПРЕСЕТЫ -->
+    <!-- РОЛЕВЫЕ ШАБЛОНЫ -->
     <section class="screen" id="screen-presets">
-      <h1>Пресеты</h1>
-      <p class="subtitle">Наборы моделей и лимиты кредитов для разных ролей</p>
+      <h1>Ролевые шаблоны</h1>
+      <p class="subtitle">Готовые наборы моделей и лимитов для типовых ролей. Можно использовать как есть или настроить под себя.</p>
 
       <div class="actions-bar">
         <div></div>
-        <button class="btn btn-primary" onclick="openModal('createPresetModal')">+ Создать пресет</button>
+        <button class="btn btn-primary" onclick="openModal('createPresetModal')">+ Создать ролевой шаблон</button>
       </div>
 
       <div class="preset-card">
@@ -595,7 +490,7 @@
       </div>
     </section>
 
-    <!-- ЭКРАН 4. ЛИМИТЫ -->
+    <!-- ЛИМИТЫ -->
     <section class="screen" id="screen-limits">
       <h1>Настройки лимитов на следующий период</h1>
       <p class="subtitle">Период: ноябрь 2026 · тариф Бизнес · 1 500 кредитов</p>
@@ -604,10 +499,10 @@
         ℹ️ Система предзаполнила значения на основе предыдущего периода. Вы можете отредактировать их вручную.
       </div>
 
-      <h2>Распределение по пресетам</h2>
+      <h2>Распределение по ролевым шаблонам</h2>
       <div style="background:#fff; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden;">
         <div class="limit-row" style="background:#fafafa; font-size:13px; color:#666; font-weight:500;">
-          <div>Пресет</div>
+          <div>Ролевой шаблон</div>
           <div>Прошлый лимит</div>
           <div>Предзаполнено</div>
           <div>Ваш лимит</div>
@@ -645,13 +540,13 @@
       </div>
 
       <h2>Индивидуальные лимиты сотрудников</h2>
-      <p class="subtitle" style="font-size:13px;">Если задан индивидуальный лимит, он имеет приоритет над лимитом пресета.</p>
+      <p class="subtitle" style="font-size:13px;">Если задан индивидуальный лимит, он имеет приоритет над лимитом ролевого шаблона.</p>
 
       <div style="background:#fff; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden;">
         <div class="limit-row" style="background:#fafafa; font-size:13px; color:#666; font-weight:500;">
           <div>Сотрудник</div>
-          <div>Пресет</div>
-          <div>Лимит пресета</div>
+          <div>Ролевой шаблон</div>
+          <div>Лимит шаблона</div>
           <div>Индивидуальный лимит</div>
         </div>
         <div class="limit-row">
@@ -674,7 +569,7 @@
       </div>
     </section>
 
-    <!-- ЭКРАН 5. ТАРИФ -->
+    <!-- ТАРИФ -->
     <section class="screen" id="screen-tariff">
       <h1>Управление тарифом</h1>
       <p class="subtitle">Текущий тариф и смена на следующий период</p>
@@ -713,7 +608,7 @@
       </div>
     </section>
 
-    <!-- ЭКРАН 6. БАЛАНС -->
+    <!-- БАЛАНС -->
     <section class="screen" id="screen-balance">
       <h1>Баланс и пополнение</h1>
       <p class="subtitle">Текущий баланс компании и история операций</p>
@@ -790,7 +685,7 @@
       </table>
     </section>
 
-    <!-- ЭКРАН 7. ДЕТАЛИЗАЦИЯ -->
+    <!-- ДЕТАЛИЗАЦИЯ -->
     <section class="screen" id="screen-details">
       <h1>Детализация расхода</h1>
       <p class="subtitle">Расход кредитов по сотрудникам за период</p>
@@ -802,7 +697,7 @@
           <option>Сентябрь 2026</option>
         </select>
         <select>
-          <option>Все пресеты</option>
+          <option>Все ролевые шаблоны</option>
           <option>Разработчик</option>
           <option>Аналитик</option>
           <option>Маркетолог</option>
@@ -819,7 +714,7 @@
         <thead>
           <tr>
             <th>Сотрудник</th>
-            <th>Пресет</th>
+            <th>Ролевой шаблон</th>
             <th>Запросов</th>
             <th>Токенов</th>
             <th>Потрачено</th>
@@ -874,7 +769,7 @@
       <input type="email" placeholder="name@company.ru">
     </div>
     <div class="form-field">
-      <label>Пресет</label>
+      <label>Ролевой шаблон</label>
       <select>
         <option>Разработчик</option>
         <option>Аналитик</option>
@@ -906,7 +801,7 @@
       <input type="email" value="ivan@romashka.ru">
     </div>
     <div class="form-field">
-      <label>Пресет</label>
+      <label>Ролевой шаблон</label>
       <select>
         <option selected>Разработчик</option>
         <option>Аналитик</option>
@@ -951,7 +846,7 @@
 
 <div class="modal" id="createPresetModal">
   <div class="modal-content">
-    <h3>Создать пресет</h3>
+    <h3>Создать ролевой шаблон</h3>
     <div class="form-field">
       <label>Название</label>
       <input type="text" placeholder="Например, Тестировщик">
@@ -995,7 +890,7 @@
     document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
     document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
     document.getElementById("screen-" + screenId).classList.add("active");
-    document.querySelector(`.nav-item[data-screen="${screenId}"]`).classList.add("active");
+    document.querySelector('.nav-item[data-screen="' + screenId + '"]').classList.add("active");
   }
 
   // Модальные окна
